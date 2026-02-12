@@ -68,6 +68,23 @@ Plugins are automatically available when relevant. Examples:
 
 Full usage mapping: [CLAUDE.md](../CLAUDE.md#optional-plugin-agents-wshobsonagents)
 
+## Security Workflow
+
+### Security Review
+
+**Before commits involving auth, permissions, or data access:**
+1. Run @security-guardian for architectural security review
+2. Address findings (auth/authz, input validation, data exposure)
+3. For specialized checks: use @backend-api-security plugin (OWASP, automated scans)
+
+### Strict Quality Gate
+
+**NO commits without review:**
+- Before any commit: run @quality-reviewer
+- Summarize review findings and address critical issues
+- Acknowledge review completion before committing
+- Exception: trivial docs/config changes (use judgment)
+
 ## Troubleshooting
 
 ### Backend not starting

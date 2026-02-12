@@ -22,6 +22,7 @@ MVP системы бонусных соглашений: ввод, хранен
 | @calculation-engine | Calc logic, strategy design, result persistence |
 | @frontend-portal | React structure, components, routing, forms |
 | @bug-fixer | Regressions, runtime errors, broken behavior |
+| @security-guardian | Security review, OWASP validation, auth/authz checks |
 | @documentation-maintainer | README, docs/, CLAUDE.md updates |
 | @quality-reviewer | Architecture review, quality gate |
 
@@ -57,6 +58,14 @@ API (api/v1/) → Services (services/) → Repositories (repositories/) → Mode
 3. **Review** → verify architecture consistency
 4. **Commit** → logical, focused commits
 
+### Strict Quality Gate
+
+**NO commits without review:**
+- Before any commit: run @quality-reviewer
+- Summarize review findings
+- Acknowledge and address critical issues
+- Only then proceed with commit
+
 ## Coding Discipline
 
 ### General
@@ -81,6 +90,13 @@ API (api/v1/) → Services (services/) → Repositories (repositories/) → Mode
 ## Optional Plugin Agents (wshobson/agents)
 
 Specialized workflow plugins from wshobson/agents marketplace.
+
+### Core Agents First Rule
+
+**Prefer core domain agents over plugin tooling:**
+- If a task can be solved by a core agent (@backend-architect, @security-guardian, etc.), use it first
+- Use plugins only for specialized automation workflows (migrations, test generation, security scanning, refactoring tools)
+- Example: security review → @security-guardian (core) before backend-api-security (plugin)
 
 ### Installation
 
