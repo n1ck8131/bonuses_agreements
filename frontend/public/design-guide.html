@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Guide — Корпоративный портал М.Видео-Эльдорадо</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0F1117;
+    color: #E8EAED;
+    min-height: 100vh;
+  }
+
+  /* === HEADER === */
+  .guide-header {
+    background: linear-gradient(135deg, #1A1D23 0%, #2C3140 100%);
+    padding: 60px 80px;
+    border-bottom: 3px solid #E30613;
+    position: relative;
+    overflow: hidden;
+  }
+  .guide-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(227,6,19,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .guide-header h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 42px;
+    letter-spacing: -1.5px;
+    color: #FFFFFF;
+    margin-bottom: 8px;
+  }
+  .guide-header p {
+    font-size: 16px;
+    color: #A6BEC0;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+  }
+  .guide-header .logo-area {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+
+  /* === MAIN LAYOUT === */
+  .guide-body {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 48px 80px 80px;
+  }
+
+  /* === SECTION === */
+  .section {
+    margin-bottom: 64px;
+  }
+  .section-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: #FFFFFF;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-title::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 24px;
+    background: #E30613;
+    border-radius: 2px;
+  }
+  .section-subtitle {
+    font-size: 14px;
+    color: #7A8599;
+    margin-bottom: 32px;
+    padding-left: 16px;
+  }
+
+  /* === COLOR PALETTE === */
+  .colors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  .color-card {
+    border-radius: 16px;
+    overflow: hidden;
+    background: #1A1D23;
+    border: 1px solid #2C3140;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .color-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+  }
+  .color-swatch {
+    height: 100px;
+    position: relative;
+  }
+  .color-swatch .hex-overlay {
+    position: absolute;
+    bottom: 8px;
+    right: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(4px);
+    color: #fff;
+  }
+  .color-info {
+    padding: 14px 16px;
+  }
+  .color-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: #E8EAED;
+    margin-bottom: 2px;
+  }
+  .color-role {
+    font-size: 12px;
+    color: #7A8599;
+  }
+
+  /* === TYPOGRAPHY === */
+  .typo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .typo-card {
+    background: #1A1D23;
+    border: 1px solid #2C3140;
+    border-radius: 16px;
+    padding: 32px;
+  }
+  .typo-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #E30613;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .typo-sample-heading {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    color: #FFFFFF;
+    letter-spacing: -1px;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .typo-sample-subheading {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: #C8CCD4;
+    letter-spacing: -0.3px;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .typo-sample-body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    color: #A0A8B8;
+    line-height: 1.7;
+  }
+  .typo-meta {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #2C3140;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .typo-meta-item {
+    font-size: 12px;
+    color: #7A8599;
+  }
+  .typo-meta-item span {
+    color: #A6BEC0;
+    font-weight: 500;
+  }
+
+  /* === BUTTONS === */
+  .buttons-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .button-group {
+    background: #1A1D23;
+    border: 1px solid #2C3140;
+    border-radius: 16px;
+    padding: 28px;
+    min-width: 200px;
+    flex: 1;
+  }
+  .button-group-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #7A8599;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.2px;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .btn:last-child { margin-bottom: 0; }
+
+  .btn-primary {
+    background: #2C3140;
+    color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(44, 49, 64, 0.4);
+  }
+  .btn-primary:hover {
+    background: #3D4456;
+    box-shadow: 0 4px 16px rgba(44, 49, 64, 0.5);
+  }
+
+  .btn-accent {
+    background: #E30613;
+    color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(227, 6, 19, 0.35);
+  }
+  .btn-accent:hover {
+    background: #CC0511;
+    box-shadow: 0 4px 16px rgba(227, 6, 19, 0.45);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: #A0A8B8;
+    border: 1.5px solid #3D4456;
+  }
+  .btn-secondary:hover {
+    border-color: #5C6370;
+    color: #E8EAED;
+    background: rgba(61, 68, 86, 0.2);
+  }
+
+  .btn-ghost {
+    background: rgba(255,255,255,0.06);
+    color: #C8CCD4;
+    border: none;
+  }
+  .btn-ghost:hover {
+    background: rgba(255,255,255,0.1);
+    color: #FFFFFF;
+  }
+
+  .btn-success {
+    background: #1B8F5A;
+    color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(27, 143, 90, 0.3);
+  }
+
+  /* === COMPONENTS PREVIEW === */
+  .components-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .component-card {
+    background: #1A1D23;
+    border: 1px solid #2C3140;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .component-card-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid #2C3140;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #7A8599;
+    font-weight: 600;
+  }
+  .component-card-body {
+    padding: 28px;
+  }
+
+  /* === MOCK HEADER === */
+  .mock-header {
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    border: 1px solid #EBEDF0;
+  }
+  .mock-header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .mock-header-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    color: #2C3140;
+  }
+  .mock-header-user {
+    font-size: 13px;
+    color: #7A8599;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .mock-header-logout {
+    font-size: 12px;
+    color: #A0A8B8;
+    border: 1px solid #E0E3E8;
+    background: none;
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  /* === MOCK TABLE === */
+  .mock-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 13px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #EBEDF0;
+    background: #FFFFFF;
+  }
+  .mock-table th {
+    background: #F7F8FA;
+    color: #5C6370;
+    font-weight: 600;
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #EBEDF0;
+  }
+  .mock-table td {
+    padding: 14px 16px;
+    color: #2C3140;
+    border-bottom: 1px solid #F2F3F5;
+  }
+  .mock-table tr:last-child td {
+    border-bottom: none;
+  }
+  .mock-table tr:hover td {
+    background: #FAFBFC;
+  }
+  .mock-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .mock-badge-type {
+    background: #F0F1F3;
+    color: #5C6370;
+  }
+  .mock-badge-rate {
+    color: #E30613;
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  /* === INPUT PREVIEW === */
+  .mock-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid #E0E3E8;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #2C3140;
+    background: #FFFFFF;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    margin-bottom: 12px;
+  }
+  .mock-input:focus {
+    border-color: #2C3140;
+    box-shadow: 0 0 0 3px rgba(44, 49, 64, 0.08);
+  }
+  .mock-input::placeholder {
+    color: #B0B8C4;
+  }
+  .mock-input-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #5C6370;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .mock-input-focused {
+    border-color: #2C3140;
+    box-shadow: 0 0 0 3px rgba(44, 49, 64, 0.08);
+  }
+
+  /* === LOGIN CARD MOCK === */
+  .mock-login {
+    background: #FFFFFF;
+    border-radius: 16px;
+    padding: 36px;
+    max-width: 340px;
+    margin: 0 auto;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    text-align: center;
+  }
+  .mock-login-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: #2C3140;
+    margin-bottom: 24px;
+    margin-top: 16px;
+  }
+  .mock-login .btn {
+    margin-top: 8px;
+  }
+
+  /* === LAYOUT PREVIEW === */
+  .layout-preview {
+    background: #F7F8FA;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #EBEDF0;
+  }
+  .layout-preview-header {
+    background: #FFFFFF;
+    padding: 14px 20px;
+    border-bottom: 1px solid #EBEDF0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .layout-preview-content {
+    padding: 20px;
+  }
+
+  /* === SHADOWS & EFFECTS === */
+  .effects-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .effect-card {
+    background: #1A1D23;
+    border: 1px solid #2C3140;
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+  }
+  .effect-demo {
+    width: 80px;
+    height: 80px;
+    border-radius: 14px;
+    margin: 0 auto 16px;
+    background: #FFFFFF;
+  }
+  .effect-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #E8EAED;
+    margin-bottom: 4px;
+  }
+  .effect-value {
+    font-size: 11px;
+    color: #7A8599;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+
+  .shadow-sm { box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .shadow-md { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  .shadow-lg { box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+  .shadow-xl { box-shadow: 0 16px 48px rgba(0,0,0,0.16); }
+
+  /* === SPACING === */
+  .spacing-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .spacing-bar {
+    height: 8px;
+    background: linear-gradient(90deg, #E30613, #FF4D58);
+    border-radius: 4px;
+  }
+  .spacing-label {
+    font-size: 12px;
+    color: #7A8599;
+    min-width: 60px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+
+  /* === SVG LOGO === */
+  .logo-svg-demo {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .logo-variant {
+    text-align: center;
+  }
+  .logo-variant-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #7A8599;
+    font-weight: 600;
+    margin-top: 12px;
+  }
+  .logo-on-white {
+    background: #FFFFFF;
+    padding: 20px 28px;
+    border-radius: 12px;
+    display: inline-block;
+  }
+  .logo-on-dark {
+    background: #1A1D23;
+    padding: 20px 28px;
+    border-radius: 12px;
+    display: inline-block;
+    border: 1px solid #2C3140;
+  }
+
+  /* === FOOTER === */
+  .guide-footer {
+    text-align: center;
+    padding: 40px 80px;
+    border-top: 1px solid #2C3140;
+    color: #5C6370;
+    font-size: 13px;
+  }
+
+  /* === FULL MOCKUP === */
+  .full-mockup {
+    background: #F7F8FA;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #EBEDF0;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  }
+  .full-mockup-header {
+    background: #FFFFFF;
+    padding: 18px 32px;
+    border-bottom: 1px solid #EBEDF0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .full-mockup-header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .full-mockup-body {
+    padding: 32px;
+  }
+
+  /* Animated accent line */
+  @keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+  .accent-line {
+    height: 3px;
+    background: linear-gradient(90deg, #E30613, #FF4D58, #E30613);
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .guide-header { padding: 40px 32px; }
+    .guide-body { padding: 32px; }
+    .typo-grid, .components-grid { grid-template-columns: 1fr; }
+    .effects-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="guide-header">
+  <div class="logo-area">
+    <!-- М.Видео-Эльдорадо Logo -->
+    <img src="/image001.png" alt="М.Видео-Эльдорадо" style="height: 48px; width: auto;">
+    <div style="width:1px; height:48px; background:#3D4456; margin: 0 8px;"></div>
+    <div>
+      <div style="font-family:'Montserrat',sans-serif; font-weight:600; font-size:14px; color:#A6BEC0; letter-spacing:0.5px;">DESIGN GUIDE</div>
+      <div style="font-size:12px; color:#5C6370; margin-top:2px;">v1.0 — Февраль 2026</div>
+    </div>
+  </div>
+  <h1>Корпоративный портал</h1>
+  <p>Система ведения бонусных соглашений — дизайн-система и визуальный стиль</p>
+</div>
+<div class="accent-line"></div>
+
+<div class="guide-body">
+
+  <!-- ===== 1. COLOR PALETTE ===== -->
+  <div class="section">
+    <div class="section-title">Цветовая палитра</div>
+    <div class="section-subtitle">Основана на фирменных цветах М.Видео-Эльдорадо с корпоративными нейтральными тонами</div>
+    <div class="colors-grid">
+      <!-- Primary Brand -->
+      <div class="color-card">
+        <div class="color-swatch" style="background: #E30613;">
+          <span class="hex-overlay">#E30613</span>
+        </div>
+        <div class="color-info">
+          <div class="color-name">M.Video Red</div>
+          <div class="color-role">Акцент, важные CTA, логотип</div>
+        </div>
+      </div>
+      <!-- Dark -->
+      <div class="color-card">
+        <div class="color-swatch" style="background: #2C3140;">
+          <span class="hex-overlay">#2C3140</span>
+        </div>
+        <div class="color-info">
+          <div class="color-name">Corporate Dark</div>
+          <div class="color-role">Основные кнопки, заголовки, текст</div>
+        </div>
+      </div>
+      <!-- Slate -->
+      <div class="color-card">
+        <div class="color-swatch" style="background: #5C6370;">
+          <span class="hex-overlay">#5C6370</span>
+        </div>
+        <div class="color-info">
+          <div class="color-name">Slate Gray</div>
+          <div class="color-role">Вторичный текст, иконки</div>
+        </div>
+      </div>
+      <!-- Light Gray -->
+      <div class="color-card">
+        <div class="color-swatch" style="background: #A0A8B8;">
+          <span class="hex-overlay">#A0A8B8</span>
+        </div>
+        <div class="color-info">
+          <div class="color-name">Cool Gray</div>
+          <div class="color-role">Подписи, плейсхолдеры</div>
+        </div>
+      </div>
+      <!-- Background -->
+      <div class="color-card">
+        <div class="color-swatch" style="background: #F7F8FA;">
+          <span class="hex-overlay">#F7F8FA</span>
+        </div>
+        <div class="color-info">
+          <div class="color-name">Snow</div>
+          <div class="color-role">Фон страницы</div>
+        </div>
+      </div>
+      <!-- White -->
+      <div class="color-card">
+        <div class="color-swatch" style="background: #FFFFFF; border: 1px solid #2C3140;">
+          <span class="hex-overlay">#FFFFFF</span>
+        </div>
+        <div class="color-info">
+          <div class="color-name">White</div>
+          <div class="color-role">Карточки, хедер, фон форм</div>
+        </div>
+      </div>
+      <!-- Border -->
+      <div class="color-card">
+        <div class="color-swatch" style="background: #EBEDF0;">
+          <span class="hex-overlay">#EBEDF0</span>
+        </div>
+        <div class="color-info">
+          <div class="color-name">Border</div>
+          <div class="color-role">Границы, разделители</div>
+        </div>
+      </div>
+      <!-- Success -->
+      <div class="color-card">
+        <div class="color-swatch" style="background: #1B8F5A;">
+          <span class="hex-overlay">#1B8F5A</span>
+        </div>
+        <div class="color-info">
+          <div class="color-name">Success</div>
+          <div class="color-role">Успешные уведомления</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 2. TYPOGRAPHY ===== -->
+  <div class="section">
+    <div class="section-title">Типографика</div>
+    <div class="section-subtitle">Montserrat для заголовков — смелый, геометрический. Inter для основного текста — идеальная читаемость.</div>
+    <div class="typo-grid">
+      <div class="typo-card">
+        <div class="typo-label">Заголовки — Montserrat</div>
+        <div class="typo-sample-heading">Бонусные соглашения</div>
+        <div class="typo-sample-subheading">Создание нового соглашения</div>
+        <div style="font-family:'Montserrat',sans-serif; font-weight:600; font-size:16px; color:#A0A8B8; margin-top:4px;">Секция подзаголовка</div>
+        <div class="typo-meta">
+          <div class="typo-meta-item">H1: <span>32px / 700</span></div>
+          <div class="typo-meta-item">H2: <span>24px / 700</span></div>
+          <div class="typo-meta-item">H3: <span>20px / 600</span></div>
+          <div class="typo-meta-item">H4: <span>16px / 600</span></div>
+          <div class="typo-meta-item">Spacing: <span>-1px to -0.3px</span></div>
+        </div>
+      </div>
+      <div class="typo-card">
+        <div class="typo-label">Основной текст — Inter</div>
+        <div class="typo-sample-body">
+          Система ведения бонусных соглашений позволяет управлять условиями сотрудничества с поставщиками. Создавайте, просматривайте и контролируйте бонусные ставки.
+        </div>
+        <div style="font-family:'Inter',sans-serif; font-weight:500; font-size:14px; color:#7A8599; margin-top:12px;">
+          Вспомогательный текст — Inter Medium, 14px
+        </div>
+        <div style="font-family:'Inter',sans-serif; font-weight:400; font-size:12px; color:#5C6370; margin-top:8px;">
+          Мелкий текст — Inter Regular, 12px
+        </div>
+        <div class="typo-meta">
+          <div class="typo-meta-item">Body: <span>15px / 400</span></div>
+          <div class="typo-meta-item">Body 2: <span>14px / 400</span></div>
+          <div class="typo-meta-item">Caption: <span>12px / 400</span></div>
+          <div class="typo-meta-item">Line-height: <span>1.6</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 3. BUTTONS ===== -->
+  <div class="section">
+    <div class="section-title">Кнопки</div>
+    <div class="section-subtitle">Синие кнопки заменены на тёмно-серые (Corporate Dark). Красный акцент — только для критических действий.</div>
+    <div class="buttons-grid">
+      <div class="button-group">
+        <div class="button-group-label">Основная</div>
+        <button class="btn btn-primary">Создать соглашение</button>
+        <button class="btn btn-primary" style="opacity:0.5; cursor:not-allowed;">Загрузка...</button>
+      </div>
+      <div class="button-group">
+        <div class="button-group-label">Акцент (CTA)</div>
+        <button class="btn btn-accent">Войти в систему</button>
+        <button class="btn btn-accent" style="opacity:0.5; cursor:not-allowed;">Вход...</button>
+      </div>
+      <div class="button-group">
+        <div class="button-group-label">Вторичная</div>
+        <button class="btn btn-secondary">Отмена</button>
+        <button class="btn btn-secondary">Назад к списку</button>
+      </div>
+      <div class="button-group">
+        <div class="button-group-label">Ghost</div>
+        <button class="btn btn-ghost">Выйти</button>
+        <button class="btn btn-ghost">Фильтры</button>
+      </div>
+      <div class="button-group">
+        <div class="button-group-label">Успех</div>
+        <button class="btn btn-success">Сохранено</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 4. SHADOWS & CORNERS ===== -->
+  <div class="section">
+    <div class="section-title">Тени и скругления</div>
+    <div class="section-subtitle">Мягкие тени создают глубину. Скругления — 10-16px для современного корпоративного стиля.</div>
+    <div class="effects-grid">
+      <div class="effect-card">
+        <div class="effect-demo shadow-sm"></div>
+        <div class="effect-name">Small</div>
+        <div class="effect-value">0 1px 3px rgba(0,0,0,0.06)</div>
+      </div>
+      <div class="effect-card">
+        <div class="effect-demo shadow-md"></div>
+        <div class="effect-name">Medium</div>
+        <div class="effect-value">0 4px 12px rgba(0,0,0,0.08)</div>
+      </div>
+      <div class="effect-card">
+        <div class="effect-demo shadow-lg"></div>
+        <div class="effect-name">Large</div>
+        <div class="effect-value">0 8px 24px rgba(0,0,0,0.12)</div>
+      </div>
+      <div class="effect-card">
+        <div class="effect-demo shadow-xl"></div>
+        <div class="effect-name">XL</div>
+        <div class="effect-value">0 16px 48px rgba(0,0,0,0.16)</div>
+      </div>
+    </div>
+    <div style="margin-top:24px; display:flex; gap:20px; flex-wrap:wrap;">
+      <div style="background:#1A1D23; border:1px solid #2C3140; border-radius:16px; padding:20px; text-align:center; flex:1;">
+        <div style="width:64px;height:64px;background:#FFFFFF;border-radius:8px;margin:0 auto 12px;"></div>
+        <div style="font-size:13px;color:#E8EAED;font-weight:500;">8px</div>
+        <div style="font-size:11px;color:#7A8599;">Кнопки, инпуты</div>
+      </div>
+      <div style="background:#1A1D23; border:1px solid #2C3140; border-radius:16px; padding:20px; text-align:center; flex:1;">
+        <div style="width:64px;height:64px;background:#FFFFFF;border-radius:12px;margin:0 auto 12px;"></div>
+        <div style="font-size:13px;color:#E8EAED;font-weight:500;">12px</div>
+        <div style="font-size:11px;color:#7A8599;">Таблицы, контейнеры</div>
+      </div>
+      <div style="background:#1A1D23; border:1px solid #2C3140; border-radius:16px; padding:20px; text-align:center; flex:1;">
+        <div style="width:64px;height:64px;background:#FFFFFF;border-radius:16px;margin:0 auto 12px;"></div>
+        <div style="font-size:13px;color:#E8EAED;font-weight:500;">16px</div>
+        <div style="font-size:11px;color:#7A8599;">Карточки, Paper</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 5. LOGO USAGE ===== -->
+  <div class="section">
+    <div class="section-title">Логотип</div>
+    <div class="section-subtitle">Официальный логотип М.Видео-Эльдорадо. Минимальный отступ — 16px вокруг.</div>
+    <div class="logo-svg-demo">
+      <div class="logo-variant">
+        <div class="logo-on-white">
+          <img src="/image001.png" alt="М.Видео-Эльдорадо" style="height: 54px; width: auto;">
+        </div>
+        <div class="logo-variant-label">На белом фоне</div>
+      </div>
+      <div class="logo-variant">
+        <div class="logo-on-dark">
+          <img src="/image001.png" alt="М.Видео-Эльдорадо" style="height: 54px; width: auto;">
+        </div>
+        <div class="logo-variant-label">На тёмном фоне</div>
+      </div>
+      <div class="logo-variant">
+        <div class="logo-on-white">
+          <img src="/image001.png" alt="М.Видео-Эльдорадо" style="height: 30px; width: auto;">
+        </div>
+        <div class="logo-variant-label">Компактный</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 6. COMPONENT EXAMPLES ===== -->
+  <div class="section">
+    <div class="section-title">Компоненты — Примеры</div>
+    <div class="section-subtitle">Предпросмотр ключевых компонентов в новом дизайне</div>
+    <div class="components-grid">
+
+      <!-- Header Component -->
+      <div class="component-card">
+        <div class="component-card-header">Хедер приложения</div>
+        <div class="component-card-body">
+          <div class="mock-header">
+            <div class="mock-header-left">
+              <img src="/image001.png" alt="М.Видео-Эльдорадо" style="height: 34px; width: auto;">
+              <div class="mock-header-title">Бонусные соглашения</div>
+            </div>
+            <div class="mock-header-user">
+              admin
+              <button class="mock-header-logout">Выйти</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Login Form -->
+      <div class="component-card">
+        <div class="component-card-header">Форма входа</div>
+        <div class="component-card-body" style="background:#F7F8FA; border-radius:0 0 16px 16px;">
+          <div class="mock-login">
+            <img src="/csm_Mvideo-Eldorado-Logo-Red_7d6e36d173.jpg" alt="М.Видео-Эльдорадо" style="height: 34px; width: auto;">
+            <div class="mock-login-title">Вход в систему</div>
+            <label class="mock-input-label" style="text-align:left;">Имя пользователя</label>
+            <input type="text" class="mock-input" placeholder="Введите логин" readonly>
+            <label class="mock-input-label" style="text-align:left;">Пароль</label>
+            <input type="password" class="mock-input" placeholder="••••••••" readonly>
+            <button class="btn btn-accent" style="width:100%; margin-top:16px;">Войти</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table Component -->
+      <div class="component-card" style="grid-column: 1 / -1;">
+        <div class="component-card-header">Таблица соглашений</div>
+        <div class="component-card-body">
+          <table class="mock-table">
+            <thead>
+              <tr>
+                <th>Поставщик</th>
+                <th>Действует с</th>
+                <th>Действует по</th>
+                <th>Тип соглашения</th>
+                <th style="text-align:right;">Ставка</th>
+                <th>Создано</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight:600; color:#2C3140;">ООО «Самсунг Электроникс»</td>
+                <td>01.01.2026</td>
+                <td>31.12.2026</td>
+                <td><span class="mock-badge mock-badge-type">% от оборота закупок</span></td>
+                <td style="text-align:right;" class="mock-badge-rate">5.50%</td>
+                <td style="color:#A0A8B8;">12.02.2026</td>
+              </tr>
+              <tr>
+                <td style="font-weight:600; color:#2C3140;">ООО «Хайер Рус»</td>
+                <td>01.03.2026</td>
+                <td>28.02.2027</td>
+                <td><span class="mock-badge mock-badge-type">% от оборота закупок</span></td>
+                <td style="text-align:right;" class="mock-badge-rate">3.25%</td>
+                <td style="color:#A0A8B8;">10.02.2026</td>
+              </tr>
+              <tr>
+                <td style="font-weight:600; color:#2C3140;">АО «Бош Термотехника»</td>
+                <td>15.01.2026</td>
+                <td>14.01.2027</td>
+                <td><span class="mock-badge mock-badge-type">% от оборота закупок</span></td>
+                <td style="text-align:right;" class="mock-badge-rate">7.00%</td>
+                <td style="color:#A0A8B8;">08.01.2026</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Form Component -->
+      <div class="component-card" style="grid-column: 1 / -1;">
+        <div class="component-card-header">Форма создания соглашения</div>
+        <div class="component-card-body">
+          <div style="background:#FFFFFF; border-radius:16px; padding:32px; max-width:600px; box-shadow:0 4px 12px rgba(0,0,0,0.06); border:1px solid #EBEDF0;">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+              <div style="width:36px;height:36px;background:#F7F8FA;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#5C6370;font-size:18px;border:1px solid #EBEDF0;">←</div>
+              <div style="font-family:'Montserrat',sans-serif; font-weight:700; font-size:20px; color:#2C3140;">Создание соглашения</div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+              <div>
+                <label class="mock-input-label">Действует с</label>
+                <input type="text" class="mock-input" value="01.01.2026" readonly>
+              </div>
+              <div>
+                <label class="mock-input-label">Действует по</label>
+                <input type="text" class="mock-input" value="31.12.2026" readonly>
+              </div>
+            </div>
+            <label class="mock-input-label">Наименование поставщика</label>
+            <input type="text" class="mock-input mock-input-focused" value="ООО «Самсунг Электроникс»" readonly>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:8px;">
+              <div>
+                <label class="mock-input-label">Тип соглашения</label>
+                <input type="text" class="mock-input" value="% от оборота закупок" readonly>
+              </div>
+              <div>
+                <label class="mock-input-label">Ставка, %</label>
+                <input type="text" class="mock-input" value="5.50" readonly>
+              </div>
+            </div>
+            <div style="display:flex; gap:12px; margin-top:24px;">
+              <button class="btn btn-primary" style="flex:1;">Создать соглашение</button>
+              <button class="btn btn-secondary" style="min-width:120px;">Отмена</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== 7. SPACING SYSTEM ===== -->
+  <div class="section">
+    <div class="section-title">Система отступов</div>
+    <div class="section-subtitle">Кратные 4px для согласованности. Основные значения: 8, 12, 16, 24, 32, 48.</div>
+    <div style="background:#1A1D23; border:1px solid #2C3140; border-radius:16px; padding:28px; max-width:600px;">
+      <div class="spacing-row">
+        <div class="spacing-label">4px</div>
+        <div class="spacing-bar" style="width:4px;"></div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-label">8px</div>
+        <div class="spacing-bar" style="width:32px;"></div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-label">12px</div>
+        <div class="spacing-bar" style="width:48px;"></div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-label">16px</div>
+        <div class="spacing-bar" style="width:64px;"></div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-label">24px</div>
+        <div class="spacing-bar" style="width:96px;"></div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-label">32px</div>
+        <div class="spacing-bar" style="width:128px;"></div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-label">48px</div>
+        <div class="spacing-bar" style="width:192px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 8. DESIGN TOKENS SUMMARY ===== -->
+  <div class="section">
+    <div class="section-title">Сводка дизайн-токенов</div>
+    <div class="section-subtitle">Полная таблица замен для внедрения</div>
+    <div style="background:#1A1D23; border:1px solid #2C3140; border-radius:16px; overflow:hidden;">
+      <table style="width:100%; border-collapse:collapse; font-size:14px;">
+        <thead>
+          <tr style="border-bottom:1px solid #2C3140;">
+            <th style="padding:16px 20px; text-align:left; color:#7A8599; font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:1px;">Токен</th>
+            <th style="padding:16px 20px; text-align:left; color:#7A8599; font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:1px;">Было (Old)</th>
+            <th style="padding:16px 20px; text-align:left; color:#7A8599; font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:1px;">Стало (New)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid #1F222A;">
+            <td style="padding:12px 20px; color:#E8EAED;">primary.main</td>
+            <td style="padding:12px 20px;"><span style="color:#2196F3; font-family:monospace;">#2196F3</span></td>
+            <td style="padding:12px 20px;"><span style="color:#E8EAED; font-family:monospace;">#2C3140</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid #1F222A;">
+            <td style="padding:12px 20px; color:#E8EAED;">primary.light</td>
+            <td style="padding:12px 20px;"><span style="color:#64B5F6; font-family:monospace;">#64B5F6</span></td>
+            <td style="padding:12px 20px;"><span style="color:#E8EAED; font-family:monospace;">#3D4456</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid #1F222A;">
+            <td style="padding:12px 20px; color:#E8EAED;">primary.dark</td>
+            <td style="padding:12px 20px;"><span style="color:#1976D2; font-family:monospace;">#1976D2</span></td>
+            <td style="padding:12px 20px;"><span style="color:#E8EAED; font-family:monospace;">#1A1D23</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid #1F222A;">
+            <td style="padding:12px 20px; color:#E8EAED;">secondary.main</td>
+            <td style="padding:12px 20px;"><span style="color:#e31e24; font-family:monospace;">#e31e24</span></td>
+            <td style="padding:12px 20px;"><span style="color:#E30613; font-family:monospace;">#E30613</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid #1F222A;">
+            <td style="padding:12px 20px; color:#E8EAED;">text.primary</td>
+            <td style="padding:12px 20px;"><span style="color:#E8EAED; font-family:monospace;">#2c3e50</span></td>
+            <td style="padding:12px 20px;"><span style="color:#E8EAED; font-family:monospace;">#2C3140</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid #1F222A;">
+            <td style="padding:12px 20px; color:#E8EAED;">text.secondary</td>
+            <td style="padding:12px 20px;"><span style="color:#E8EAED; font-family:monospace;">#7f8c8d</span></td>
+            <td style="padding:12px 20px;"><span style="color:#E8EAED; font-family:monospace;">#5C6370</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid #1F222A;">
+            <td style="padding:12px 20px; color:#E8EAED;">heading font</td>
+            <td style="padding:12px 20px;"><span style="color:#A0A8B8; font-family:monospace;">Inter</span></td>
+            <td style="padding:12px 20px;"><span style="color:#E8EAED; font-family:monospace;">Montserrat</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid #1F222A;">
+            <td style="padding:12px 20px; color:#E8EAED;">body font</td>
+            <td style="padding:12px 20px;"><span style="color:#A0A8B8; font-family:monospace;">Inter</span></td>
+            <td style="padding:12px 20px;"><span style="color:#E8EAED; font-family:monospace;">Inter (сохранён)</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid #1F222A;">
+            <td style="padding:12px 20px; color:#E8EAED;">button shadow</td>
+            <td style="padding:12px 20px;"><span style="color:#A0A8B8; font-family:monospace;">rgba(33,150,243,...)</span></td>
+            <td style="padding:12px 20px;"><span style="color:#E8EAED; font-family:monospace;">rgba(44,49,64,...)</span></td>
+          </tr>
+          <tr>
+            <td style="padding:12px 20px; color:#E8EAED;">badge (тип)</td>
+            <td style="padding:12px 20px;"><span style="color:#A0A8B8; font-family:monospace;">blue #e3f2fd</span></td>
+            <td style="padding:12px 20px;"><span style="color:#E8EAED; font-family:monospace;">gray #F0F1F3</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== 9. FULL PAGE MOCKUP ===== -->
+  <div class="section">
+    <div class="section-title">Полный макет страницы</div>
+    <div class="section-subtitle">Как будет выглядеть главная страница со списком соглашений</div>
+    <div class="full-mockup">
+      <div class="full-mockup-header">
+        <div class="full-mockup-header-left">
+          <img src="/image001.png" alt="М.Видео-Эльдорадо" style="height: 40px; width: auto;">
+          <div style="width:1px;height:28px;background:#EBEDF0;"></div>
+          <div style="font-family:'Montserrat',sans-serif; font-weight:600; font-size:16px; color:#2C3140; letter-spacing:-0.3px;">Бонусные соглашения</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:14px;">
+          <div style="font-size:13px; color:#5C6370;">admin</div>
+          <button style="font-size:12px; color:#A0A8B8; border:1px solid #E0E3E8; background:none; padding:7px 16px; border-radius:8px; cursor:pointer; font-family:'Inter',sans-serif;">Выйти</button>
+        </div>
+      </div>
+      <div class="full-mockup-body">
+        <table class="mock-table" style="margin-bottom:0;">
+          <thead>
+            <tr>
+              <th>Поставщик</th>
+              <th>Действует с</th>
+              <th>Действует по</th>
+              <th>Тип соглашения</th>
+              <th style="text-align:right;">Ставка</th>
+              <th>Создано</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:600; color:#2C3140;">ООО «Самсунг Электроникс»</td>
+              <td>01.01.2026</td>
+              <td>31.12.2026</td>
+              <td><span class="mock-badge mock-badge-type">% от оборота закупок</span></td>
+              <td style="text-align:right;" class="mock-badge-rate">5.50%</td>
+              <td style="color:#A0A8B8;">12.02.2026</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600; color:#2C3140;">ООО «Хайер Рус»</td>
+              <td>01.03.2026</td>
+              <td>28.02.2027</td>
+              <td><span class="mock-badge mock-badge-type">% от оборота закупок</span></td>
+              <td style="text-align:right;" class="mock-badge-rate">3.25%</td>
+              <td style="color:#A0A8B8;">10.02.2026</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600; color:#2C3140;">АО «Бош Термотехника»</td>
+              <td>15.01.2026</td>
+              <td>14.01.2027</td>
+              <td><span class="mock-badge mock-badge-type">% от оборота закупок</span></td>
+              <td style="text-align:right;" class="mock-badge-rate">7.00%</td>
+              <td style="color:#A0A8B8;">08.01.2026</td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- FAB Button -->
+        <div style="display:flex; justify-content:flex-end; margin-top:24px;">
+          <div style="width:56px; height:56px; background:#2C3140; border-radius:16px; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(44,49,64,0.35); cursor:pointer;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 5v14M5 12h14" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div class="guide-footer">
+  М.Видео-Эльдорадо · Корпоративный портал · Design Guide v1.0 · Февраль 2026
+</div>
+
+</body>
+</html>
