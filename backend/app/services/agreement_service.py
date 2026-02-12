@@ -39,7 +39,9 @@ class AgreementService:
             data.supplier_code, data.agreement_type_code, float(data.condition_value),
         )
         agreement = Agreement(**data.model_dump())
-        return await self.agreement_repo.create(agreement)
+        result = await self.agreement_repo.create(agreement)
+        await self.agreement_repo.db.commit()
+        return result
 
     async def get_all(self) -> list[Agreement]:
         return await self.agreement_repo.get_all()
@@ -63,9 +65,13 @@ class AgreementService:
         for field, value in data.model_dump().items():
             setattr(agreement, field, value)
 
-        return await self.agreement_repo.update(agreement)
+        result = await self.agreement_repo.update(agreement)
+        await self.agreement_repo.db.commit()
+        return result
 
     async def update_status(self, agreement_id: uuid.UUID, status: AgreementStatus) -> Agreement:
         agreement = await self.get_by_id(agreement_id)
         agreement.status = status
-        return await self.agreement_repo.update(agreement)
+        result = await self.agreement_repo.update(agreement)
+        await self.agreement_repo.db.commit()
+        return result

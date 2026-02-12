@@ -12,7 +12,7 @@ class AgreementRepository:
 
     async def create(self, agreement: Agreement) -> Agreement:
         self.db.add(agreement)
-        await self.db.commit()
+        await self.db.flush()
         await self.db.refresh(agreement)
         return agreement
 
@@ -29,6 +29,6 @@ class AgreementRepository:
         return result.scalars().first()
 
     async def update(self, agreement: Agreement) -> Agreement:
-        await self.db.commit()
+        await self.db.flush()
         await self.db.refresh(agreement)
         return agreement

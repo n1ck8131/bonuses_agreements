@@ -36,6 +36,7 @@ class AuthService:
                 is_admin=True,
             )
             await self.user_repo.create(admin)
+            await self.user_repo.db.commit()
             logger.info("Default admin user created (username: admin, password: admin)")
         else:
             logger.info("Admin user already exists, skipping creation")

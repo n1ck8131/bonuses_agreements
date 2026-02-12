@@ -51,6 +51,37 @@ API (api/v1/) → Services (services/) → Repositories (repositories/) → Mode
 
 > Полная структура: [docs/architecture.md](docs/architecture.md)
 
+## Calculation Safety
+
+- **Idempotency**
+  - Re-running the same calculation with the same inputs must not create duplicates.
+  - Persisted results must be deterministic for the same inputs (or explicitly versioned).
+- **Uniqueness key**
+  - Every persisted calculation result must have a clear identity, e.g.:
+    - `(agreement_id, calculation_date, strategy_version)` or equivalent.
+- **Recalculation policy**
+  - Define one of:
+    - **Overwrite**: delete/replace previous results for the same uniqueness key; OR
+    - **Versioned**: keep history with `run_id`/`version`, and mark “active/latest”.
+- **Atomic persistence**
+  - Calculation run must persist results + metadata (inputs snapshot / strategy version / timestamps) in the same transaction.
+- **Auditability (MVP-friendly)**
+  - Store at least: `agreement_id`, `calc_date`, `strategy_name`, `strategy_version`, `run_at`, `status`, `error_message(optional)`.
+
+## Transaction Rules
+
+- **Transaction boundary lives in Services layer**
+  - API handlers must NOT open/commit transactions directly (only call services).
+- **Repositories must be side-effect free**
+  - Repositories must NOT call `commit()` / `rollback()`.
+  - Repositories only execute queries and return domain/db models.
+- **Service orchestrates multi-repository changes atomically**
+  - If an operation touches multiple repositories, it must be done within a single service-level transaction.
+- **Rollback policy**
+  - On any exception during a transaction, perform rollback and rethrow a domain-level exception (no raw DB errors to API).
+- **Async discipline**
+  - All DB work is `async`, uses a single request-scoped session.
+
 ## Development Workflow
 
 1. **Design** → plan changes, identify affected layers
@@ -65,6 +96,7 @@ API (api/v1/) → Services (services/) → Repositories (repositories/) → Mode
 - Summarize review findings
 - Acknowledge and address critical issues
 - Only then proceed with commit
+- If security-sensitive changes were made → run @security-guardian before commit.
 
 ## Coding Discipline
 
