@@ -78,6 +78,37 @@ API (api/v1/) → Services (services/) → Repositories (repositories/) → Mode
 - strict mode обязателен
 - Компоненты в соответствующих feature-папках
 
+## Optional Plugin Agents (wshobson/agents)
+
+Specialized workflow plugins from wshobson/agents marketplace.
+
+### Installation
+
+```bash
+/plugin marketplace add wshobson/agents
+/plugin install database-migrations
+/plugin install unit-testing
+/plugin install dependency-management
+/plugin install backend-api-security
+/plugin install api-testing-observability
+/plugin install code-refactoring
+```
+
+### When to Prefer Plugin Tooling
+
+| Plugin | Prefer When |
+| ------ | ----------- |
+| database-migrations | Alembic migrations, schema changes, rollback scenarios |
+| unit-testing | Writing tests, pytest fixtures, test coverage analysis |
+| backend-api-security | OWASP checks, auth vulnerabilities, input validation |
+| dependency-management | requirements.txt updates, npm audits, version conflicts |
+| api-testing-observability | API endpoint testing, logging instrumentation |
+| code-refactoring | Large-scale refactoring, extracting methods, DRY violations |
+
+**Later (not installed):** application-performance, documentation-generation
+
+**Governance note:** Do not import long plugin prompts into CLAUDE.md; keep governance lightweight.
+
 ## Documentation Map
 
 | Document | Content |

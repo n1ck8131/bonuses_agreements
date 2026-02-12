@@ -47,6 +47,27 @@ npm run lint     # ESLint
 npm run format   # Prettier
 ```
 
+## Claude Plugins (Optional)
+
+Specialized workflow agents from wshobson/agents marketplace.
+
+### Installation
+
+```bash
+/plugin marketplace add wshobson/agents
+/plugin install database-migrations unit-testing dependency-management backend-api-security api-testing-observability code-refactoring
+```
+
+### Usage
+
+Plugins are automatically available when relevant. Examples:
+
+- `@database-migrations` — Alembic migrations, schema changes
+- `@unit-testing` — pytest fixtures, test coverage
+- `@backend-api-security` — OWASP checks, auth vulnerabilities
+
+Full usage mapping: [CLAUDE.md](../CLAUDE.md#optional-plugin-agents-wshobsonagents)
+
 ## Troubleshooting
 
 ### Backend not starting

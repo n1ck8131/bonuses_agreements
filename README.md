@@ -148,3 +148,7 @@ See [docs/development.md](docs/development.md) for additional development detail
 | [docs/database.md](docs/database.md) | Current schema, migrations, future calc tables |
 | [docs/calculation-engine.md](docs/calculation-engine.md) | Strategy pattern, roadmap |
 | [docs/development.md](docs/development.md) | Dev commands, linting, migrations |
+
+---
+
+**Optional:** Project uses wshobson/agents plugin marketplace for specialized workflows (migrations, testing, security). See [CLAUDE.md](CLAUDE.md#optional-plugin-agents-wshobsonagents) for installation and usage.
