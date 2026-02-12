@@ -2,7 +2,7 @@ import uuid
 from datetime import date, datetime
 from decimal import Decimal
 
-from sqlalchemy import String, Enum, Numeric, CheckConstraint, ForeignKey
+from sqlalchemy import String, Enum, Numeric, CheckConstraint, ForeignKey, text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
@@ -14,6 +14,12 @@ class Agreement(Base):
     __tablename__ = "agreements"
 
     id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
+    code: Mapped[str] = mapped_column(
+        String(8),
+        nullable=False,
+        unique=True,
+        server_default=text("LPAD(nextval('agreement_code_seq')::text, 8, '0')"),
+    )
     valid_from: Mapped[date] = mapped_column(nullable=False)
     valid_to: Mapped[date] = mapped_column(nullable=False)
     supplier_code: Mapped[str] = mapped_column(

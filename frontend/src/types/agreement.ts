@@ -25,6 +25,7 @@ export interface AgreementCreate {
 
 export interface Agreement {
   id: string;
+  code: string;
   valid_from: string;
   valid_to: string;
   supplier_code: string;

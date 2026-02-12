@@ -93,6 +93,7 @@ export const AgreementsList: React.FC = () => {
             <TableHead>
               <TableRow>
                 <TableCell sx={{ width: 56 }}>Статус</TableCell>
+                <TableCell sx={{ width: 120 }}>Номер</TableCell>
                 <TableCell>Наименование поставщика</TableCell>
                 <TableCell>Действует с</TableCell>
                 <TableCell>Действует по</TableCell>
@@ -104,7 +105,7 @@ export const AgreementsList: React.FC = () => {
             <TableBody>
               {agreements.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={7} align="center" sx={{ py: 6 }}>
+                  <TableCell colSpan={8} align="center" sx={{ py: 6 }}>
                     <Typography variant="body1" color="text.secondary">
                       Соглашения не найдены
                     </Typography>
@@ -124,6 +125,16 @@ export const AgreementsList: React.FC = () => {
                   >
                     <TableCell sx={{ textAlign: "center" }}>
                       {getStatusIcon(agreement.status)}
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        fontFamily: '"Roboto Mono", monospace',
+                        fontWeight: 500,
+                        fontSize: "0.8125rem",
+                        color: "#2C3140",
+                      }}
+                    >
+                      {agreement.code}
                     </TableCell>
                     <TableCell sx={{ fontWeight: 500 }}>{agreement.supplier_name}</TableCell>
                     <TableCell>{formatDate(agreement.valid_from)}</TableCell>

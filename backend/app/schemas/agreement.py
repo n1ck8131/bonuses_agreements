@@ -39,6 +39,7 @@ class AgreementResponse(BaseModel):
     model_config = {"from_attributes": True}
 
     id: uuid.UUID
+    code: str
     valid_from: date
     valid_to: date
     supplier_code: str
