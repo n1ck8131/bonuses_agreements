@@ -16,7 +16,7 @@ import { AgreementForm } from "./AgreementForm";
 
 export const CreateAgreement: React.FC = () => {
   const navigate = useNavigate();
-  const { suppliers, agreementTypes, loading: refLoading } = useReferenceData();
+  const { suppliers, agreementTypes, scales, loading: refLoading } = useReferenceData();
 
   if (refLoading) {
     return <LoadingSpinner />;
@@ -29,7 +29,7 @@ export const CreateAgreement: React.FC = () => {
 
   return (
     <Box sx={{ backgroundColor: "#F7F8FA", minHeight: "calc(100vh - 89px)", py: 4 }}>
-      <Container maxWidth="sm">
+      <Container maxWidth="md">
         <Paper sx={{ p: 4, border: "1px solid #EBEDF0" }}>
           <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
             <IconButton
@@ -63,6 +63,7 @@ export const CreateAgreement: React.FC = () => {
           <AgreementForm
             suppliers={suppliers}
             agreementTypes={agreementTypes}
+            scales={scales}
             onSubmit={handleSubmit}
             onCancel={() => navigate("/agreements")}
             submitLabel="Создать соглашение"

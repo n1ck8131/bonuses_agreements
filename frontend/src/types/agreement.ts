@@ -12,6 +12,11 @@ export interface RefSupplier {
 export interface RefAgreementType {
   code: string;
   name: string;
+}
+
+export interface RefScale {
+  code: string;
+  name: string;
   grid: "PERCENT" | "FIX";
 }
 
@@ -20,6 +25,7 @@ export interface AgreementCreate {
   valid_to: string;
   supplier_code: string;
   agreement_type_code: string;
+  scale_code: string;
   condition_value: number;
 }
 
@@ -32,7 +38,9 @@ export interface Agreement {
   supplier_name: string;
   agreement_type_code: string;
   agreement_type_name: string;
-  agreement_type_grid: "PERCENT" | "FIX";
+  scale_code: string;
+  scale_name: string;
+  scale_grid: "PERCENT" | "FIX";
   condition_value: number;
   status: AgreementStatus;
   created_at: string;

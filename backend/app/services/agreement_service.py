@@ -21,6 +21,7 @@ class AgreementService:
         self,
         supplier_code: str,
         agreement_type_code: str,
+        scale_code: str,
         condition_value: float,
     ) -> None:
         supplier = await self.reference_repo.get_supplier_by_code(supplier_code)
@@ -31,12 +32,17 @@ class AgreementService:
         if not agreement_type:
             raise ValidationError("Invalid agreement_type_code")
 
-        if agreement_type.grid == GridType.PERCENT and condition_value > 100:
+        scale = await self.reference_repo.get_scale_by_code(scale_code)
+        if not scale:
+            raise ValidationError("Invalid scale_code")
+
+        if scale.grid == GridType.PERCENT and condition_value > 100:
             raise ValidationError("For PERCENT grid, condition_value must be <= 100")
 
     async def create(self, data: AgreementCreate) -> Agreement:
         await self._validate_refs(
-            data.supplier_code, data.agreement_type_code, float(data.condition_value),
+            data.supplier_code, data.agreement_type_code, data.scale_code,
+            float(data.condition_value),
         )
         agreement = Agreement(**data.model_dump())
         result = await self.agreement_repo.create(agreement)
@@ -59,7 +65,8 @@ class AgreementService:
             raise AppError("Cannot edit a deleted agreement", status_code=400)
 
         await self._validate_refs(
-            data.supplier_code, data.agreement_type_code, float(data.condition_value),
+            data.supplier_code, data.agreement_type_code, data.scale_code,
+            float(data.condition_value),
         )
 
         for field, value in data.model_dump().items():

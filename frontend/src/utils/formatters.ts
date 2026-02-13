@@ -7,10 +7,10 @@ export const formatDateTime = (dateString: string): string => {
 };
 
 export const formatCondition = (agreement: {
-  agreement_type_grid: string;
+  scale_grid: string;
   condition_value: number;
 }): string => {
-  if (agreement.agreement_type_grid === "PERCENT") {
+  if (agreement.scale_grid === "PERCENT") {
     return `${agreement.condition_value}%`;
   }
   return `${agreement.condition_value} руб.`;

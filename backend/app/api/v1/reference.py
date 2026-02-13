@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 
 from app.api.deps import get_current_user, get_reference_service
 from app.models.user import User
-from app.schemas.reference import RefSupplierResponse, RefAgreementTypeResponse
+from app.schemas.reference import RefSupplierResponse, RefAgreementTypeResponse, RefScaleResponse
 from app.services.reference_service import ReferenceService
 
 router = APIRouter()
@@ -22,3 +22,11 @@ async def get_agreement_types(
     current_user: User = Depends(get_current_user),
 ) -> list:
     return await service.get_all_agreement_types()
+
+
+@router.get("/ref/scales", response_model=list[RefScaleResponse])
+async def get_scales(
+    service: ReferenceService = Depends(get_reference_service),
+    current_user: User = Depends(get_current_user),
+) -> list:
+    return await service.get_all_scales()

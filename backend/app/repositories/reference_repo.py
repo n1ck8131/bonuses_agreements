@@ -1,7 +1,7 @@
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.reference import RefSupplier, RefAgreementType
+from app.models.reference import RefSupplier, RefAgreementType, RefScale
 
 
 class ReferenceRepository:
@@ -16,8 +16,15 @@ class ReferenceRepository:
         result = await self.db.execute(select(RefAgreementType).order_by(RefAgreementType.code))
         return list(result.scalars().all())
 
+    async def get_all_scales(self) -> list[RefScale]:
+        result = await self.db.execute(select(RefScale).order_by(RefScale.code))
+        return list(result.scalars().all())
+
     async def get_supplier_by_code(self, code: str) -> RefSupplier | None:
         return await self.db.get(RefSupplier, code)
 
     async def get_agreement_type_by_code(self, code: str) -> RefAgreementType | None:
         return await self.db.get(RefAgreementType, code)
+
+    async def get_scale_by_code(self, code: str) -> RefScale | None:
+        return await self.db.get(RefScale, code)

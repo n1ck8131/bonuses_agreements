@@ -1,16 +1,16 @@
 # Bonus Agreements System
 
-MVP системы бонусных соглашений: ввод, хранение, управление, расчёт.
-Технические детали: [README.md](README.md) | Документация: [docs/](docs/)
+MVP bonus agreements system: input, storage, management, calculation.
+Technical details: [README.md](README.md) | Documentation: [docs/](docs/)
 
 ---
 
 ## Auto-Orchestrator Rule
 
-- При получении задачи — определить затронутые слои (API, Services, Repositories, Models, Frontend)
-- Выбрать агента из таблицы ниже
-- Если задача затрагивает >2 слоёв — начать с @design-scout
-- Если задача неоднозначна — сделать разумное инженерное допущение, не выдумывать требования
+- On receiving a task — identify affected layers (API, Services, Repositories, Models, Frontend)
+- Select an agent from the table below
+- If the task affects >2 layers — start with @design-scout
+- If the task is ambiguous — make a reasonable engineering assumption, do not invent requirements
 
 ## Agent Selection
 
@@ -42,14 +42,14 @@ MVP системы бонусных соглашений: ввод, хранен
 API (api/v1/) → Services (services/) → Repositories (repositories/) → Models (models/)
 ```
 
-- **API** — тонкие route handlers, делегируют в services
-- **Services** — бизнес-логика, валидация
-- **Repositories** — доступ к данным (SQLAlchemy queries)
+- **API** — thin route handlers, delegate to services
+- **Services** — business logic, validation
+- **Repositories** — data access (SQLAlchemy queries)
 - **Domain** — enums, constants, exceptions
 - **Core** — config, security, logging
-- **Calculation** — скелет расчётного движка (Strategy pattern)
+- **Calculation** — calculation engine skeleton (Strategy pattern)
 
-> Полная структура: [docs/architecture.md](docs/architecture.md)
+> Full structure: [docs/architecture.md](docs/architecture.md)
 
 ## Calculation Safety
 
@@ -82,6 +82,15 @@ API (api/v1/) → Services (services/) → Repositories (repositories/) → Mode
 - **Async discipline**
   - All DB work is `async`, uses a single request-scoped session.
 
+## Running the Project
+
+- Everything runs via Docker Compose: `docker compose up -d`
+- After backend code changes (code is baked into image): `docker compose up -d --build backend`
+- Migrations: `docker compose exec backend alembic upgrade head`
+- Logs: `docker compose logs -f backend`
+- **DO NOT** run uvicorn directly on host, **DO NOT** kill processes on port 8000 (Docker proxy)
+- Details: [docs/development.md](docs/development.md)
+
 ## Development Workflow
 
 1. **Design** → plan changes, identify affected layers
@@ -102,22 +111,23 @@ API (api/v1/) → Services (services/) → Repositories (repositories/) → Mode
 
 ### General
 
-- Отвечать лаконично
-- Не выдумывать несуществующие требования
-- При неоднозначности делать разумное инженерное допущение
+- Be concise
+- Do not invent non-existent requirements
+- When ambiguous, make a reasonable engineering assumption
 
 ### Backend (Python)
 
-- async/await для всех DB операций
-- Type hints обязательны
-- Новые endpoints: route → service → repository
-- Новые enums: domain/enums.py
-- Новые исключения: domain/exceptions.py
+- async/await for all DB operations
+- Type hints are mandatory
+- New endpoints: route → service → repository
+- New enums: domain/enums.py
+- New exceptions: domain/exceptions.py
 
 ### Frontend (TypeScript)
 
-- strict mode обязателен
-- Компоненты в соответствующих feature-папках
+- strict mode is mandatory
+- Components in corresponding feature folders
+- Reference fields (suppliers, types, etc.) — always use `SearchableSelect` (`components/common/SearchableSelect.tsx`), not `Select`
 
 ## Optional Plugin Agents (wshobson/agents)
 

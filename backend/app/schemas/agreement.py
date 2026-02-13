@@ -12,6 +12,7 @@ class AgreementBase(BaseModel):
     valid_to: date
     supplier_code: str = Field(..., min_length=1)
     agreement_type_code: str = Field(..., min_length=1)
+    scale_code: str = Field(..., min_length=1)
     condition_value: Decimal = Field(..., gt=0)
 
     @field_validator("valid_to")
@@ -46,7 +47,9 @@ class AgreementResponse(BaseModel):
     supplier_name: str
     agreement_type_code: str
     agreement_type_name: str
-    agreement_type_grid: str
+    scale_code: str
+    scale_name: str
+    scale_grid: str
     condition_value: Decimal
     status: AgreementStatus
     created_at: datetime
@@ -59,5 +62,7 @@ class AgreementResponse(BaseModel):
             data.supplier_name = data.supplier.name
         if hasattr(data, "agreement_type") and data.agreement_type is not None:
             data.agreement_type_name = data.agreement_type.name
-            data.agreement_type_grid = data.agreement_type.grid.value
+        if hasattr(data, "scale") and data.scale is not None:
+            data.scale_name = data.scale.name
+            data.scale_grid = data.scale.grid.value
         return data

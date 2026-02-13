@@ -17,6 +17,13 @@ class RefAgreementType(Base):
 
     code: Mapped[str] = mapped_column(String(20), primary_key=True)
     name: Mapped[str] = mapped_column(String(255), nullable=False)
+
+
+class RefScale(Base):
+    __tablename__ = "ref_scales"
+
+    code: Mapped[str] = mapped_column(String(10), primary_key=True)
+    name: Mapped[str] = mapped_column(String(255), nullable=False)
     grid: Mapped[GridType] = mapped_column(
         Enum(GridType, name="grid_type_enum"), nullable=False
     )

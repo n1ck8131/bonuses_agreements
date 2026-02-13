@@ -1,4 +1,4 @@
-from app.models.reference import RefSupplier, RefAgreementType
+from app.models.reference import RefSupplier, RefAgreementType, RefScale
 from app.repositories.reference_repo import ReferenceRepository
 
 
@@ -11,3 +11,6 @@ class ReferenceService:
 
     async def get_all_agreement_types(self) -> list[RefAgreementType]:
         return await self.reference_repo.get_all_agreement_types()
+
+    async def get_all_scales(self) -> list[RefScale]:
+        return await self.reference_repo.get_all_scales()

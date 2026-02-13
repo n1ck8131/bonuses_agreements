@@ -7,7 +7,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
 from app.domain.enums import AgreementStatus
-from app.models.reference import RefSupplier, RefAgreementType
+from app.models.reference import RefSupplier, RefAgreementType, RefScale
 
 
 class Agreement(Base):
@@ -28,6 +28,9 @@ class Agreement(Base):
     agreement_type_code: Mapped[str] = mapped_column(
         String(20), ForeignKey("ref_agreement_types.code"), nullable=False
     )
+    scale_code: Mapped[str] = mapped_column(
+        String(10), ForeignKey("ref_scales.code"), nullable=False
+    )
     condition_value: Mapped[Decimal] = mapped_column(Numeric(15, 2), nullable=False)
     status: Mapped[AgreementStatus] = mapped_column(
         Enum(AgreementStatus, name="agreement_status_enum"),
@@ -42,6 +45,7 @@ class Agreement(Base):
 
     supplier: Mapped[RefSupplier] = relationship(lazy="joined")
     agreement_type: Mapped[RefAgreementType] = relationship(lazy="joined")
+    scale: Mapped[RefScale] = relationship(lazy="joined")
 
     __table_args__ = (
         CheckConstraint("valid_to >= valid_from", name="check_valid_dates"),

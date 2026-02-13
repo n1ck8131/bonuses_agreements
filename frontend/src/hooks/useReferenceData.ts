@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
-import { getSuppliers, getAgreementTypes } from "../api/client";
-import { RefSupplier, RefAgreementType } from "../types/agreement";
+import { getSuppliers, getAgreementTypes, getScales } from "../api/client";
+import { RefSupplier, RefAgreementType, RefScale } from "../types/agreement";
 
 export function useReferenceData() {
   const [suppliers, setSuppliers] = useState<RefSupplier[]>([]);
   const [agreementTypes, setAgreementTypes] = useState<RefAgreementType[]>([]);
+  const [scales, setScales] = useState<RefScale[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const load = async () => {
       try {
-        const [s, t] = await Promise.all([getSuppliers(), getAgreementTypes()]);
+        const [s, t, sc] = await Promise.all([getSuppliers(), getAgreementTypes(), getScales()]);
         setSuppliers(s);
         setAgreementTypes(t);
+        setScales(sc);
       } catch {
         setError("Не удалось загрузить справочники");
       } finally {
@@ -23,5 +25,5 @@ export function useReferenceData() {
     load();
   }, []);
 
-  return { suppliers, agreementTypes, loading, error };
+  return { suppliers, agreementTypes, scales, loading, error };
 }

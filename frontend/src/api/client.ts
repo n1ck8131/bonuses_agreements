@@ -1,4 +1,4 @@
-import { Agreement, AgreementCreate, AgreementStatus, RefSupplier, RefAgreementType } from "../types/agreement";
+import { Agreement, AgreementCreate, AgreementStatus, RefSupplier, RefAgreementType, RefScale } from "../types/agreement";
 import { LoginRequest, Token, User } from "../types/auth";
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000/api";
@@ -149,6 +149,18 @@ export const getAgreementTypes = async (): Promise<RefAgreementType[]> => {
 
   if (!response.ok) {
     throw new Error("Failed to fetch agreement types");
+  }
+
+  return response.json();
+};
+
+export const getScales = async (): Promise<RefScale[]> => {
+  const response = await fetch(`${API_BASE_URL}/ref/scales`, {
+    headers: getAuthHeaders(),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch scales");
   }
 
   return response.json();

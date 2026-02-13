@@ -97,7 +97,7 @@ export const AgreementsList: React.FC = () => {
                 <TableCell>Наименование поставщика</TableCell>
                 <TableCell>Действует с</TableCell>
                 <TableCell>Действует по</TableCell>
-                <TableCell>Тип соглашения</TableCell>
+                <TableCell>Вид соглашения</TableCell>
                 <TableCell align="right">Условие</TableCell>
                 <TableCell>Дата создания</TableCell>
               </TableRow>
